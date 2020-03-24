@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { SliderPicker } from 'react-color';
-import globalStore from '../../state/globalStore';
+import {StoreContext} from '../../state/store';
 
 const inputStyles = {
   input: {
@@ -13,31 +13,19 @@ const inputStyles = {
 };
 
 const ColorPicker = () => {
-  const [globalState, setGlobalState] = useState(globalStore.state);
-  const [primary, setPrimary] = useState(globalState.data.theme.inactiveColor);
-
-  useEffect(()=> {
-    globalStore.subscribe(setGlobalState);
-    globalStore.init();
-  },[]);
-
-  useEffect(() => {
-      setPrimary(globalState.data.theme.activeColor);
-  }, [globalState.data.theme.activeColor])
+  const { state, actions } = useContext(StoreContext);
 
   return (
     <div
       className='Color-Picker'
-      style={{backgroundColor: primary, border: `1px solid pink`}}
+      style={{backgroundColor: state.theme.activeColor, border: `1px solid pink`}}
     >
       <SliderPicker
         style={ inputStyles }
-        color={ primary }
+        color={ state.theme.activeColor }
         onChange={
-          (color, e) => {
-            // console.log('color:', color);
-            // console.log('e:', e);
-            return globalStore.setBackgroundColor(color.hex);
+          (color) => {
+            actions.setBackgroundColor(color.hex)
           }
         }
       />

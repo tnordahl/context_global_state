@@ -1,6 +1,5 @@
 import { BehaviorSubject } from 'rxjs';
 
-import { initialState as theme, setBackgroundColor, setElementActive } from './reducers/theme';
 import { initialState as cats, setImageLoading, getCatImage, resetCatImage} from './reducers/cats';
 
 // STATE
@@ -8,7 +7,6 @@ const subject = new BehaviorSubject();
 
 const initialState = {
   data: {
-    theme,
     cats
   },
 };

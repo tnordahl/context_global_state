@@ -1,24 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import globalStore from '../../state/globalStore';
-import { hot } from 'react-hot-loader/root';
+import React, { useEffect, useState, useContext } from 'react';
+import {StoreContext} from '../../state/store';
 
 const ThemedButton = () => {
-  const [globalState, setGlobalState] = useState(globalStore.state);
-  const [primary, setPrimary] = useState(globalState.data.theme.inactiveColor);
-
-  useEffect(()=> {
-    globalStore.subscribe(setGlobalState);
-    globalStore.init();
-  },[]);
+  const { state, actions } = useContext(StoreContext);
+  const [primary, setPrimary] = useState(state.theme.inactiveColor);
 
   useEffect(() => {
-    if(globalState.data.theme.activeElements.all) {
-      setPrimary(globalState.data.theme.activeColor);
+    if(state.theme.activeElements.all) {
+      setPrimary(state.theme.activeColor);
     } else {
-      setPrimary(globalState.data.theme.inactiveColor);
+      setPrimary(state.theme.inactiveColor);
     }
 
-  }, [Object.keys(globalState.data.theme.activeElements)])
+  }, [Object.keys(state.theme.activeElements)])
 
   return (
     <button
@@ -26,11 +20,11 @@ const ThemedButton = () => {
       style={{ backgroundColor: primary, color: 'white' }}
       onClick={(e) => {
         e.stopPropagation();
-        return globalStore.setElementActive('all');
+        actions.setActiveID('all')
       }}
     >
       {
-        globalState.data.theme.activeElements.all
+        state.theme.activeElements.all
         ? 'All inactive!'
         : 'All active!'
       }
@@ -38,4 +32,4 @@ const ThemedButton = () => {
   );
 };
 
-export default hot(ThemedButton);
+export default ThemedButton;

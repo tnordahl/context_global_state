@@ -1,23 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import globalStore from '../../state/globalStore';
+import {StoreContext} from '../../state/store';
 
 const DebugUpdateBox = ({ children, boxId }) => {
-  const [globalState, setGlobalState] = useState(globalStore.state);
-  const [primary, setPrimary] = useState(globalState.data.theme.inactiveColor);
+  const { state, actions } = useContext(StoreContext);
+  const [primary, setPrimary] = useState(state.theme.inactiveColor);
 
-  useEffect(()=> {
-    globalStore.subscribe(setGlobalState);
-    globalStore.init();
-  },[]);
 
   useEffect(() => {
-    if(globalState.data.theme.activeElements[boxId] || globalState.data.theme.activeElements.all) {
-      setPrimary(globalState.data.theme.activeColor);
+    if(state.theme.activeElements[boxId] || state.theme.activeElements.all) {
+      setPrimary(state.theme.activeColor);
     } else {
-      setPrimary(globalState.data.theme.inactiveColor);
+      setPrimary(state.theme.inactiveColor);
     }
-  }, [Object.keys(globalState.data.theme.activeElements)])
+  }, [Object.keys(state.theme.activeElements)])
 
   return (
     <div
@@ -34,7 +30,7 @@ const DebugUpdateBox = ({ children, boxId }) => {
       }
       onClick={(e) => {
         e.stopPropagation();
-        return globalStore.setElementActive(boxId);
+        actions.setActiveID(boxId)
       }
     }
     >
