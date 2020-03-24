@@ -1,9 +1,14 @@
 import types from '../actionTypes'
 
 const useActions = (state, dispatch) => ({
-  loadCatImage: data => {
+  setImageLoading: data => {
     dispatch({ type: types.TOGGLE_IMAGE_LOADING, payload: data })
-    dispatch({ type: types.LOAD_CAT_IMAGE, payload: data })
+  },
+  removeCatImage: () => {
+    dispatch({ type: types.REMOVE_CAT_IMAGE })
+  },
+  updateCatImage: () => {
+    dispatch({ type: types.LOAD_CAT_IMAGE })
   },
   setActiveID: data => {
     dispatch({ type: types.SET_ACTIVE_ID, id: data })

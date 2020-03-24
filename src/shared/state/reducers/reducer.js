@@ -15,14 +15,13 @@ const initialState = {
      }
    }
 
-
-
 const reducer = (state = initialState, action) => {
 const newState = { ...state }
 let newThemeState = {}
+let newCatsState = {}
 
 switch (action.type) {
-   case types.SET_ACTIVE_ID:
+  case types.SET_ACTIVE_ID:
     newThemeState = { ...state.theme };
 
     if(newThemeState.activeElements[action.id]) {
@@ -37,17 +36,32 @@ switch (action.type) {
 
     newState.theme = { ...newThemeState }
     return { ...newState }
-   // case types.LOAD_YOUTUBE_INFO_SUCESS:
-   //  return { ...state, youtubeInfo: action.payload, loading: false }
-   // case types.LOAD_YOUTUBE_INFO_FAIL: return { ...state, loading: false, error: action.payload }
-   // case types.SET_LOADING_INDICATOR: return { ...state, loading: true }
-
-   case types.SET_BACKGROUND_COLOR:
-      console.log('reducer SET_BACKGROUND_COLOR:', action)
-     newThemeState = { ...state.theme };
-     newThemeState.activeColor = action.color;
-     newState.theme = { ...newThemeState }
-     return { ...newState }
+  case types.SET_BACKGROUND_COLOR:
+    newThemeState = { ...state.theme };
+    newThemeState.activeColor = action.color;
+    newState.theme = { ...newThemeState }
+    return { ...newState }
+  case types.TOGGLE_IMAGE_LOADING:
+    console.log('reducer TOGGLE_IMAGE_LOADING:', action)
+    newCatsState = { ...state.cats };
+    newCatsState.imageLoading = action.payload;
+    newState.cats = { ...newCatsState }
+    return { ...newState }
+  case types.REMOVE_CAT_IMAGE:
+    console.log('reducer REMOVE_CAT_IMAGE:', action)
+    newCatsState = { ...state.cats };
+    newCatsState.currentCatUrl = null;
+    newState.cats = { ...newCatsState }
+    return { ...newState }
+  case types.LOAD_CAT_IMAGE:
+    console.log('reducer LOAD_CAT_IMAGE:', action)
+     return { ...state }
+  case types.LOAD_CAT_IMAGE_SUCCESS:
+      console.log('reducer LOAD_CAT_IMAGE_SUCCESS:', action)
+      newCatsState = { ...state.cats };
+      newCatsState.currentCatUrl = action.payload;
+      newState.cats = { ...newCatsState }
+      return { ...newState }
 
    default:
     return { ...state }

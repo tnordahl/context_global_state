@@ -1,19 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import globalStore from '../../state/globalStore';
+import {StoreContext} from '../../state/store';
 
 const DebugCatBox = () => {
-  const [globalState, setGlobalState] = useState(globalStore.state);
-  const [catImage, setCatImage] = useState(globalState.data.cats.currentCatUrl);
-
-  useEffect(()=> {
-    globalStore.subscribe(setGlobalState);
-    globalStore.init();
-  },[]);
-
-  useEffect(() => {
-    setCatImage(globalState.data.cats.currentCatUrl);
-  }, [globalState.data.cats.currentCatUrl])
+  const { state, actions } = useContext(StoreContext);
 
   return (
     <div
@@ -24,14 +14,16 @@ const DebugCatBox = () => {
       style={{backgroundColor: 'orange'}}
       onClick={(e) => {
         e.stopPropagation();
-        return globalStore.updateCatImage();
+        actions.removeCatImage();
+        actions.setImageLoading(true);
+        actions.updateCatImage();
       }
     }
     >
       {
-        catImage
-        ? <img alt='a cat' src={catImage}/>
-        : globalState.data.cats.imageLoading ? 'loading an amazing cat' : 'you want cat!'
+        state.cats.currentCatUrl
+        ? <img alt='a cat' src={state.cats.currentCatUrl}/>
+        : state.cats.imageLoading ? 'loading an amazing cat' : 'you want cat!'
       }
     </div>
   );
