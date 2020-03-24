@@ -1,9 +1,6 @@
 import types from '../actionTypes'
 
 const initialState = {
-     loading: false,
-     youtubeInfo: null,
-     error: '' ,
      theme: {
        activeColor: 'green',
        inactiveColor: 'blue',
