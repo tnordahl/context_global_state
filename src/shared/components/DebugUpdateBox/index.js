@@ -21,7 +21,7 @@ const DebugUpdateBox = ({ children, boxId }) => {
   return (
     <div
       role='button'
-      className='Debug_Box'
+      className='Debug-Box'
       tabIndex='0'
       onKeyDown={() => null}
       style={
@@ -37,6 +37,11 @@ const DebugUpdateBox = ({ children, boxId }) => {
       }
     }
     >
+    <div className='Debug-Box__checked-message'>{
+          state.theme.activeElements[boxId]
+          ? 'active '
+          : 'inactive'
+        }</div>
       { children }
     </div>
   );
