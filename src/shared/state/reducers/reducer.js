@@ -18,17 +18,26 @@ let newThemeState = {}
 let newCatsState = {}
 
 switch (action.type) {
+  case types.REGISTER_ELEMENT:
+    newThemeState = { ...state.theme };
+
+    newThemeState.activeElements[action.id] = false;
+
+    newState.theme = { ...newThemeState }
+    return { ...newState }
   case types.SET_ACTIVE_ID:
     newThemeState = { ...state.theme };
 
     if(newThemeState.activeElements[action.id]) {
-      delete newThemeState.activeElements[action.id];
+      newThemeState.activeElements[action.id] = false;
     } else if(action.id === 'all'){
-      newThemeState.activeElements = {
-        all: 'active',
-      };
+      const allTrue = Object.values(newThemeState.activeElements).every( (val, i, arr) => val === true );
+
+      Object.keys(newThemeState.activeElements).forEach( key => {
+        newThemeState.activeElements[key] = !allTrue;
+      });
     } else {
-      newThemeState.activeElements[action.id] = 'active';
+      newThemeState.activeElements[action.id] = true;
     }
 
     newState.theme = { ...newThemeState }

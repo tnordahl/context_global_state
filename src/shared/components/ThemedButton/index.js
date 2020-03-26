@@ -4,13 +4,19 @@ import {StoreContext} from '../../state/store';
 const ThemedButton = () => {
   const { state, actions } = useContext(StoreContext);
   const [primary, setPrimary] = useState(state.theme.inactiveColor);
+  const [all, setAll] = useState(false);
 
   useEffect(() => {
-    if(state.theme.activeElements.all) {
+
+    const allChecked = Object.values(state.theme.activeElements).every( (val, i, arr) => val === true );
+
+    if(allChecked) {
       setPrimary(state.theme.activeColor);
     } else {
       setPrimary(state.theme.inactiveColor);
     }
+
+    setAll(allChecked);
 
   }, [Object.keys(state.theme.activeElements)])
 
@@ -24,7 +30,7 @@ const ThemedButton = () => {
       }}
     >
       {
-        state.theme.activeElements.all
+        all
         ? 'All inactive!'
         : 'All active!'
       }

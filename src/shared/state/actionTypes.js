@@ -7,6 +7,7 @@ export default {
     LOAD_CAT_IMAGE_ERROR: 'cats.LOAD_CAT_IMAGE_ERROR',
 
     // Theme
+    REGISTER_ELEMENT: 'theme.REGISTER_ELEMENT',
     SET_ACTIVE_ID: 'theme.SET_ACTIVE_ID',
     SET_BACKGROUND_COLOR: 'theme.SET_BACKGROUND_COLOR'
 }

@@ -10,6 +10,9 @@ const useActions = (state, dispatch) => ({
   updateCatImage: () => {
     dispatch({ type: types.LOAD_CAT_IMAGE })
   },
+  registerElement: data => {
+    dispatch({ type: types.REGISTER_ELEMENT, id: data })
+  },
   setActiveID: data => {
     dispatch({ type: types.SET_ACTIVE_ID, id: data })
   },

@@ -6,9 +6,12 @@ const DebugUpdateBox = ({ children, boxId }) => {
   const { state, actions } = useContext(StoreContext);
   const [primary, setPrimary] = useState(state.theme.inactiveColor);
 
+  useEffect(() => {
+    actions.registerElement(boxId)
+  }, [])
 
   useEffect(() => {
-    if(state.theme.activeElements[boxId] || state.theme.activeElements.all) {
+    if(state.theme.activeElements[boxId]) {
       setPrimary(state.theme.activeColor);
     } else {
       setPrimary(state.theme.inactiveColor);
