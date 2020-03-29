@@ -8,7 +8,7 @@ const DebugCatBox = () => {
   return (
     <div
       role='button'
-      className='Debug_Cat_Box'
+      className='Debug-Cat-Box'
       tabIndex='0'
       onKeyDown={() => null}
       style={{backgroundColor: 'orange'}}

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import ThemedButton from '../ThemedButton';
 import DebugUpdateBox from '../DebugUpdateBox';
 import DebugCatBox from '../DebugCatBox';
